@@ -173,5 +173,11 @@ int main() {
         Para a in1.txt, a estratégia de Aleatorização + Inclusão de itens que cabem na mochila não teve melhora significativa.
         Porém, quando a capacidade da mochila aumenta, a estratégia passa a demonstrar um resultado mais significativo. (426 -> 503)
 
+
+        * OBS.:
+            * - Aqui, a estratégia utilizada foi adicionar o primeiro item que couber, seguindo a ordem de leitura do arquivo.
+            * - Poderíamos utilizar outras estratégias: Adicionar o primeiro mais valioso, adicionar o primeiro mais leve, etc.
+            * - Poderíamos também utilizar uma estratégia parecida com a da busca-local: adicionar todas as combinações possíveis de
+            * itens extras e escolher a melhor combinação.
     */
 }
