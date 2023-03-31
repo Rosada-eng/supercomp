@@ -41,24 +41,8 @@ void sort_book_by_ending_time(vector<movie> &book, vector<int> &sorting_list) {
 }
 
 void book_a_movie(vector<movie> &book, vector<int> &movies_booked, vector<int> &categories_booked, int movie_id) {
-    // cout << "booking " << movie_id << "(cat - " << book[movie_id].category << ")" << endl;
-
     movies_booked.push_back(movie_id);
     categories_booked.push_back(book[movie_id].category);
-}
-
-void reflects_day_transition(vector<movie> &book) {
-    for (uint i = 0; i < book.size(); i++) {
-        book[i].start += 24;
-        book[i].end += 24;
-    }
-}
-
-void deflects_day_transition(vector<movie> &book) {
-    for (uint i = 0; i < book.size(); i++) {
-        book[i].start -= 24;
-        book[i].end -= 24;
-    }
 }
 
 int main() {
@@ -99,11 +83,6 @@ int main() {
     }
 
     sort_book_by_ending_time(book, sorting_movies);
-
-    // for (int i = 0; i < n; i++) {
-    // cout << book[sorting_movies[i]].id << " " << book[sorting_movies[i]].start << " " << book[sorting_movies[i]].end << " " << book[sorting_movies[i]].category << endl;
-    // cout << sorting_movies[i] << endl;
-    // }
 
     vector<int> booked_backup;
     int last_seen_finishes_at = 0;
@@ -150,15 +129,10 @@ int main() {
             }
         }
 
-        // ELEVAR O HORÁRIO DE TODOS OS FILMES EM 24 HORAS
-        // reflects_day_transition(book);
         if (last_seen_finishes_at >= 24) {
             last_seen_finishes_at -= 24;
         }
     }
-
-    // desfaz adaptação
-    // deflects_day_transition(book);
 
     for (uint i = 0; i < movies_booked.size(); i++) {
         cout << movies_booked[i] << " ";
@@ -168,32 +142,6 @@ int main() {
          << "total: " << movies_booked.size() << endl;
 
     // TODO: implementar um mapa com os horários alocados para filmes
-
-    // // printa o horário de cada filme
-    // for (uint i = 0; i < movies_booked.size(); i++) {
-    //     cout << book[movies_booked[i]].start << " " << book[movies_booked[i]].end << "\t" << movies_booked[i] << "\t"
-    //          << "C" << book[movies_booked[i]].category << endl;
-    // }
-
-    // // prints a timeline of the movies booked
-    // for (uint i = 0; i < 49; i++) {
-    //     cout << "|" << std::setw(2) << std::setfill('0') << i;
-    // }
-
-    // cout << "|" << endl;
-
-    // for (uint i = 0; i < 49; i++) {
-    //     cout << "|--";
-    // }
-
-    // cout << "|" << endl;
-    // int m = 0;
-    // for (int i = 0; i < 48; i++) {
-    //     if (i < book[movies_booked[m]].start) {
-
-    //     }
-
-    // }
 
     cout << endl;
     return 0;
