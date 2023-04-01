@@ -2,6 +2,7 @@
 #include <chrono>
 #include <fstream>
 #include <random>
+#include <string>
 
 using namespace std;
 
@@ -9,8 +10,10 @@ int main(int argc, char *argv[]) {
     int n = atoi(argv[1]);
     int m = atoi(argv[2]);
 
+    string filename = argv[3];
+
     ofstream inputFile;
-    inputFile.open("input.txt");
+    inputFile.open(filename);
     inputFile << n << " " << m << endl;
 
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
