@@ -1,11 +1,13 @@
 #include <iomanip>
 #include <iostream>
 #include <omp.h>
+
 static long num_steps = 1024l * 1024 * 1024 * 2;
 
 #define MIN_BLK 1024 * 1024 * 256
 
 double sum = 0;
+int fork_count = 0;
 
 void pi_r(long Nstart, long Nfinish, double step) {
     /**
@@ -34,19 +36,27 @@ void pi_r(long Nstart, long Nfinish, double step) {
 
     long i, iblk;
     if (Nfinish - Nstart < MIN_BLK) {
+#pragma omp parallel for reduction(+ : sum)
         for (i = Nstart; i < Nfinish; i++) {
             double x = (i + 0.5) * step;
             sum += 4.0 / (1.0 + x * x);
         }
     } else {
         iblk = Nfinish - Nstart;
-        pi_r(Nstart, Nfinish - iblk / 2, step);
-        pi_r(Nfinish - iblk / 2, Nfinish, step);
+#pragma omp task
+        {
+            pi_r(Nstart, Nfinish - iblk / 2, step);
+            fork_count += 1;
+        }
+#pragma omp task
+        {
+            pi_r(Nfinish - iblk / 2, Nfinish, step);
+        }
     }
 }
 
 int main() {
-    // long i;
+    long i;
     double step, pi;
     double init_time, final_time;
     step = 1.0 / (double)num_steps;
@@ -56,4 +66,6 @@ int main() {
     final_time = omp_get_wtime() - init_time;
 
     std::cout << "for " << num_steps << " steps pi = " << std::setprecision(15) << pi << " in " << final_time << " secs\n";
+
+    std::cout << "fork_count = " << fork_count << "\n";
 }

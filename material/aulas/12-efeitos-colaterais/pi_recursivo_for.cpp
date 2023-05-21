@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include <omp.h>
+
 static long num_steps = 1024l * 1024 * 1024 * 2;
 
 #define MIN_BLK 1024 * 1024 * 256
@@ -34,6 +35,7 @@ void pi_r(long Nstart, long Nfinish, double step) {
 
     long i, iblk;
     if (Nfinish - Nstart < MIN_BLK) {
+#pragma omp parallel for reduction(+ : sum)
         for (i = Nstart; i < Nfinish; i++) {
             double x = (i + 0.5) * step;
             sum += 4.0 / (1.0 + x * x);
@@ -46,7 +48,7 @@ void pi_r(long Nstart, long Nfinish, double step) {
 }
 
 int main() {
-    // long i;
+    long i;
     double step, pi;
     double init_time, final_time;
     step = 1.0 / (double)num_steps;
