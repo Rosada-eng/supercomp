@@ -13,7 +13,7 @@ struct item {
     double valor;
 };
 
-double get_probability() {
+double get_random_coord() {
     // srand (time(NULL)) gera um seed diferente para cada vez que executar o programa
     srand(time(NULL));
 
@@ -68,7 +68,7 @@ void gera_mochila_aleatoria(vector<item> &itens, vector<int> &ids_selecionados, 
     double peso = 0;
 
     for (int i = 0; i < n_total; i++) {
-        double prob = get_probability();
+        double prob = get_random_coord();
 
         if (prob < 0.5) {
             // objeto selecionado

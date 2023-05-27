@@ -13,7 +13,7 @@ default_random_engine generator(SEED);
 // Para geração aleatória de Números Reais
 uniform_real_distribution<double> distribution(0.0, 1.0);
 
-double get_probability() {
+double get_random_coord() {
     return distribution(generator);
 }
 
@@ -68,19 +68,21 @@ int main() {
     vector<item> itens_selecionados;
 
     for (int i = 0; i < n_total; i++) {
-        double r = get_probability();
+        double r = get_random_coord();
         item selected;
         if (r > 1 - 0.75) {
             // PROBABILIDADE DE 75%
             // -> usar heurística (seleciona o próximo elemento mais valioso ou mais leve)
             // cout << "heuristica " << r << endl;
             selected = itens[i];
+            cout << "heuristica " << selected.id << endl;
         } else {
             // PROBABILIDADE DE 25%
             // seleciona um elemento aleatório dos que não foram analisados
             uniform_int_distribution<int> distribution(i, n_total - 1);
             int random_index = distribution(generator);
 
+            cout << "aleatorio " << random_index << endl;
             selected = itens[random_index];
 
             // cout << "aleatorio " << r << " " << random_index << endl;
