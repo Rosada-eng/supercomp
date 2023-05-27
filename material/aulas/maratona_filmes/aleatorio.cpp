@@ -48,7 +48,7 @@ void book_a_movie(vector<movie> &book, vector<int> &movies_booked, vector<int> &
     categories_booked.push_back(book[movie_id].category);
 }
 
-double get_probability() {
+double get_random_coord() {
     // srand (time(NULL)) gera um seed diferente para cada vez que executar o programa
     srand(time(NULL));
 
@@ -157,7 +157,7 @@ int main() {
     int last_seen_finishes_at = 0;
     for (int day = 0; day < 2; day++) {
         for (int i = 0; i < n; i++) {
-            double probability = get_probability();
+            double probability = get_random_coord();
 
             int movie_id = sorting_movies[i];
 
